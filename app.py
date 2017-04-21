@@ -39,7 +39,12 @@ def audiencecreation():
     return r
 
 def processRequest(req):
-    return getSearchResults(getSearchText(req))
+    text = getSearchText(req)
+
+    # DO SOME DATA SCIENCE FUN STUFF
+
+    
+    return getSearchResults(text)
 
 def getSearchText(req):
     if req and req['message'] and req['message'] is not None:
