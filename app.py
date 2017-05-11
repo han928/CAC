@@ -92,11 +92,14 @@ def search_results_from_keyphrases(l):
     return output
 
 if __name__ == '__main__':
-    # port = int(os.getenv('PORT', 5000))
-    #
-    # print("Starting app on port %d" % port)
-    #
-    # app.run(debug=False, port=port, host='0.0.0.0')
-    kp = ['car', 'toyota', 'whatever']
+    port = int(os.getenv('PORT', 5000))
 
-    search_results_from_keyphrases(kp)
+    print("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0')
+
+
+    # test search result from keyphrase
+    # kp = ['car', 'toyota', 'whatever']
+    #
+    # search_results_from_keyphrases(kp)
