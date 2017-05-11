@@ -17,6 +17,8 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
+from collections import defaultdict
+
 # Flask app should start in global layout
 app = Flask(__name__)
 
@@ -60,9 +62,41 @@ def getSearchResults(text):
     else:
         return {}
 
+
+def search_results_from_keyphrases(l):
+    """
+    Input:
+
+    l: list of keyphrases
+
+    Output:
+
+    output: dictionary of results where
+        key: the input keyphrase
+        value: list of ranked output with each item in tuple of
+               (score, name of element)
+
+    """
+
+    output = defaultdict(list)
+
+    for kw in l:
+        # calling search function on each keyword
+        # TODO this may change to elasticsearch client directly
+        search_result = getSearchResults(kw)
+
+        # check if there's no result returned
+        if search_result != {}:
+            output[kw]  = [ (o['score'], o['name'] ) for o in search_result['results']]
+
+    return output
+
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    # port = int(os.getenv('PORT', 5000))
+    #
+    # print("Starting app on port %d" % port)
+    #
+    # app.run(debug=False, port=port, host='0.0.0.0')
+    kp = ['car', 'toyota', 'whatever']
 
-    print("Starting app on port %d" % port)
-
-    app.run(debug=False, port=port, host='0.0.0.0')
+    search_results_from_keyphrases(kp)
